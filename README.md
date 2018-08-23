@@ -1,2 +1,5 @@
-# vagrant-docker-compose
-vagrant-docker-compose
+
+https://github.com/leighmcculloch/vagrant-docker-compose
+
+Steps
+vagrant plugin install vagrant-docker-compose

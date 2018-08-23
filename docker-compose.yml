@@ -1,0 +1,27 @@
+version: '3.1'
+
+volumes:
+  init.sql: 
+  restore-db.sh:    
+  data:
+  postgres_data:
+    driver: local
+
+services:
+  db:
+    image: postgres:9.6.9
+    volumes:
+    - postgres_data:/var/lib/postgresql/data #ensure you data is saved between container shutdown/startup
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql #run SQL on postgres startup
+    - ./restore-db.sh:/docker-entrypoint-initdb.d/restore-db.sh #run batch script on postgres startup (to import dump file into PG)
+    - ./data:/data
+    ports:
+    - "5433:5432"
+    environment:
+    - POSTGRES_PASSWORD=example
+    
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - 8080:8080
